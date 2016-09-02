@@ -1,0 +1,43 @@
+<?php
+	session_start();
+	include_once 'db-connect.php';
+	
+	if(!isset($_SESSION['user']) !=""{
+		header("Location: http://local.myfirstproject.ro/login.php");
+	}
+	
+	
+?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+	<title> My first project </title>
+	</head>
+
+	<body>
+		<h1> Important notes </h1>
+		
+		<!-- DISPLAY LOGGED USER -->
+		<!-- <h3> Oy,  <?php echo $_SESSION['email'] ?> </h3> -->
+		<button type="submit" value="Logout" action="logout.php">
+		<legend><p>  - write down your notes and then click ADD - </p></legend>
+		<form>
+			<textarea rows="10" cols="40"> </textarea>
+			<br>
+			<input type="submit" value="ADD"/>
+		</form>
+		
+		<br>
+		<hr>
+		
+		<div class="added-notes">
+			<fieldset>
+				<legend><h2> Your added-notes </h2></legend>
+				
+			</fieldset>
+		</div>		
+	</body>
+
+
+</html>

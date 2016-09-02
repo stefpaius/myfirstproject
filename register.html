@@ -1,0 +1,80 @@
+//Backup for register
+
+
+//Method 1
+session_start();
+include_once 'db-conn.php';
+
+if(isset($_POST['register-btn'])) {
+
+  //Credentials verification
+  $email = $_POST['email'];
+  $pass1 = $_POST['pass1'];
+  $pass2 = $_POST['pass2'];
+
+
+  if ($email == $email) {
+    if ($pass1 == $pass2) {
+    // All good. Move on
+    $fname = mysqli_real_escape_string($dbconn, $_POST['fname']);
+    $lname = mysqli_real_escape_string($dbconn, $_POST['lname']);
+    $email = mysqli_real_escape_string($dbconn, $_POST['email']);
+    $pass1 = mysqli_real_escape_string($dbconn, $_POST['pass1']);
+    $pass2 = mysqli_real_escape_string($dbconn, $_POST['pass2']);
+
+    //Password encryption
+    $pass1 = sha1($pass1);
+
+
+    mysqli_query($dbconn, "INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `pass1`) VALUES ('NULL', '$fname', '$lname', '$email', '$pass1')")
+      or die(mysqli_error($dbconn));
+    } else {
+      echo "Invalid credentials<br>";
+      exit();
+      }
+    } else {
+      echo "Wrong credentials mate!<br>";
+    }
+
+  echo "Registration succes!<br>";
+  }
+
+
+
+
+  //Method 2
+  include_once 'db-conn.php';
+
+  function newUser() {
+  	$fname = mysqli_real_escape_string($dbconn, $_POST['fname']);
+  	$lname = mysqli_real_escape_string($dbconn, $_POST['lname']);
+  	$email = mysqli_real_escape_string($dbconn, $_POST['email']);
+  	$pass1 = mysqli_real_escape_string($dbconn, $_POST['pass1']);
+  	$pass2 = mysqli_real_escape_string($dbconn, $_POST['pass2']);
+
+  	//Password ecnryption
+  	$pass1 = sha1($pass1);
+
+  	$insertSQL = "INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `pass1`) VALUES ('NULL', '$fname', '$lname', '$email', '$pass1')";
+  	$data = mysqli_query($dbconn, $insertSQL) or die(mysqli_error($dbconn));
+
+  	if($data) {
+  		echo "Registration complete! <br>";
+  	}
+  }
+
+  function Register() {
+  	//Email verification
+  	if(!empty($_POST['email'])) {
+  		$selectEm = mysqli_query($dbconn, "SELECT * FROM `users` WHERE email = '$_POST['email']'") or die(mysql_error());
+  		if(!$row = mysqli_fetch_array($query)) or die(mysql_error())) {
+  			newUser();
+  		} else {
+  			echo "Email already registered!";
+  		}
+  	}
+  }
+
+  if(isseet($_POST['register-btn'])) {
+  	Register();
+  };

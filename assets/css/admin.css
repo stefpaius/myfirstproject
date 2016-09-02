@@ -1,0 +1,67 @@
+table, th, td,tr {
+    border: 2px solid #232323;
+    border-collapse: collapse;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+table {
+    margin: 80px auto auto 120px;
+}
+
+th:first-child {
+    width: 95px;
+}
+
+th:nth-child(2){
+    width: 195px;
+}
+
+th:nth-child(3){
+    width: 220px;;
+}
+
+th:nth-child(4){
+    width: 230px;;
+}
+
+th:nth-child(5){
+    width: 220px;
+}
+
+th:nth-child(6){
+    width: 80px;
+}
+
+th:nth-child(7){
+    width:90px;
+}
+
+input.form-control {
+    width: inherit;
+    height: 24px;
+    outline: none;
+    border: none;
+    padding: 10px auto;
+    text-align: center;
+}
+
+input.form-control:focus {
+    border: 2px solid tomato;
+}
+
+div.input-group-addon {
+    background: transparent;
+    border: none;
+}
+
+.input-group-addon button {
+    margin: auto 3.5% auto auto;
+}
+
+.delete-warning {
+    color: red;
+    font-weight: bold;
+}
+
+

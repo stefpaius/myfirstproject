@@ -1,0 +1,69 @@
+/*.login-form input[type="password"], input[type="text"], input[type="submit"] {
+    display: inline-block;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.login-form input[type="submit"] {
+    display: block !important;
+}
+
+.login-form label {
+    display: block;
+}
+
+.login-form .error-box {
+    display: inline-block;
+    color: crimson;
+    font-style: italic;
+}*/
+
+body {
+  background-color: #232323;
+}
+
+.form-box {
+  width: 50%;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.form-box h1 {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: tomato;
+}
+
+.form-box h1 span {
+  font-weight: lighter;
+}
+
+.register-link h3 {
+    color: silver;
+}
+
+label.error {
+    color: tomato;
+}
+
+.form-box h3:first-child {
+    color: whitesmoke;
+}
+
+.sr-only {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    padding: 0;
+    margin: 0px;
+    overflow: visible;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    color: whitesmoke;
+}
+
+.sr-only p {
+    color: tomato;
+    font-style: italic;
+}

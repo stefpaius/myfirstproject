@@ -1,0 +1,152 @@
+BACKUP
+
+
+// LOGIN METHOD 1
+if(isset($_SESSION['login-btn'])!="") {
+  header("Location: index.php");
+}
+
+if(isset($_POST['login-btn']) == "") {
+  $email = $_POST['myemail'];
+  $pass1 = $_POST['mypass1'];
+
+  //To protect MYSQL injection
+  $myemail = stripslashes($myemail);
+  $mypass1 = stripslashes($mypass1);
+  $myemail = mysqli_real_escape_string($dbconn,$myemail);
+  $mypass1 = mysqli_real_escape_string($dbconn,$pass1);
+
+  $logSQL = "SELECT * FROM `users` WHERE email='$myemail' AND pass1='$mypass1'";
+  $result = mysqli_query($dbconn,$logSQL);
+  $count = mysqli_num_rows($result);
+  if($count==1) {
+    echo "Login success!";
+  } else {
+    echo "Login FAILED!";
+  }
+}
+
+
+// LOGIN METHOD 2
+session_start();
+include_once 'db-conn.php';
+
+if(!empty($_SESSION['login-btn'])) {
+  header("Location: index.php");
+} else {
+  $email = mysqli_real_escape_string($dbconn, $_POST['myemail']);
+  $pass1 = mysqli_real_escape_string($dbconn, $_POST['mypass1']);
+  $selectSQL = "SELECT * FROM `users` WHERE email ='$email'";
+  $result = mysqli_query($dbconn, $selectSQL);
+  $row = mysqli_fetch_array($result);
+
+  if($row['pass1'] == sha1($pass1)) {
+    $_SESSION['users'] = $row['id'];
+    echo "Login succes!";
+  } else {
+    echo "Failed login!";
+  }
+}
+
+
+// LOGIN METHOD 3
+session_start();
+$error='';
+if (isset($_POST['login-btn'])) {
+	if(empty($_POST['myemail']) || empty($_POST['mypass'])) {
+		$error = "Invalid credentials!";
+	} else {
+		$myemail = $_POST['myemail'];
+		$mypass = $_POST['mypass'];
+
+		//
+		$hostname = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname = "mysql";
+		$dbconn = mysqli_connect($hostname, $username, $password) or die("Unable to connect to MySQL");
+		$selectedDB = mysqli_select_db($dbconn, $dbname) or die(mysqli_error($dbconn));
+
+		// MySQL injection security measures
+		$myemail = stripslashes($myemail);
+		$mypass = stripslashes($mypass);
+		$myemail = mysqli_real_escape_string($dbconn, $myemail);
+		$mypass = mysqli_real_escape_string($dbconn, $mypass);
+
+
+		//Select DB
+		$db = mysqli_select_db($dbconn, 'users');
+
+		//Getting SQL data to find mb_ereg_match
+		$query = mysqli_query($dbconn, "SELECT * FROM `users` WHERE myemail ='$myemail' AND mypass ='$mypass'");
+		$rows = mysqli_fetch_row($query);
+
+		if($rows == true) {
+			$_SESSION['login-btn'] = $myemail;
+			//header("Location: index.php");
+			echo "Login success!";
+		} else {
+			$error = "Invalid email or password!";
+		}
+			// mysqli_close($dbconn);
+	}
+}
+
+  //LOGIN METHOD 4
+  session_start();
+
+  //Set up variables
+  $email ="";
+  $pass1 ="";
+  $errorMess ="";
+  $num_rows = 0;
+
+  //Include DB
+  require_once('db-conn.php');
+
+  //SQL checking function
+  if($_SERVER['REQUEST_METHOD']=='POST') {
+  	//Retrieve email & password from input area
+  	$email = $_POST['email'];
+  	$pass = $_POST['pass1'];
+
+  	//Scripting attacks prevention
+  	$email = htmlspecialchars($email);
+  	$pass = htmlspecialchars($pass);
+
+   //DB connection attempt
+  	$dbconn = mysqli_connect($hostname, $username, $password);
+  	$selectedDB = mysqli_select_db($dbconn, $dbname);
+
+  	//If DB is found
+  	if($selectedDB) {
+  	} else {
+  		$errorMess = "Error logging on!";
+  	}
+
+  	//SQL injection prevention
+  	$email = mysqli_fetch_row(mysqli, $email);
+  	$pass = mysqli_fetch_row(mysqli, $pass);
+
+  	//SQL for retrieving  credentials
+  	$SQL = "SELECT * FROM `users` WHERE email = $email AND pass1 = $pass";
+
+  	//Issue SQL
+  	$result = mysqli_query($dbconn, $SQL);
+
+  	//Checking $result return values
+  	if($result) {
+  	} else {
+  		$errorMess = "Logging on error";
+  	}
+
+  	if($num_rows > 0) {
+  		session_start();
+  		$_SESSION['login'] ="1";
+  		header ("Location: index.php");
+  	} else {
+  		$errorMess = "Invalid credentials";
+  		$_SESSION['login'] = '';
+  	}
+
+  }

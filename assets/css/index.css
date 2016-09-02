@@ -1,0 +1,60 @@
+body {
+  background-color: #232323;
+}
+
+p,h1,h2,h3,h4,h5 { 
+    color: whitesmoke
+}
+
+textarea {
+    width: 100%;
+    background-color: whitesmoke;
+}
+
+.form-box {
+  width: 50%;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.form-box h1 {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: tomato;
+}
+
+label.error {
+    color: tomato;
+}
+
+.sr-only {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    padding: 0;
+    margin: 0px;
+    overflow: visible;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    color: whitesmoke;
+}
+
+.sr-only p {
+    color: tomato;
+    font-style: italic;
+}
+
+.added-notes {
+    color: tomato;
+}
+
+textarea {
+    border-left: 7px solid tomato;
+    border-right: 7px solid tomato;
+}
+
+fieldset h2:first-child {
+    padding-bottom: 15px;
+    border-bottom: 5px solid tomato;
+}
